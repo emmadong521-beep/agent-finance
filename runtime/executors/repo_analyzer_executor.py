@@ -43,7 +43,7 @@ class RepoAnalyzerExecutor(BaseExecutor):
             task_id=task.task_id,
             executor_name=self.name(),
             status="completed",
-            summary=f"Rule-based repo analysis completed for {repo_name}",
+            summary=f"已完成 {repo_name} 的规则型仓库分析",
             output=report,
             metadata={
                 "repo_name": repo_name,
@@ -88,23 +88,22 @@ class RepoAnalyzerExecutor(BaseExecutor):
         default_branch = parsed["default_branch"] or "unknown"
 
         sections = [
-            "## Overview",
+            "## 概览",
             self._overview(repo_name, repo_url, repo_context_used, metadata, readme_excerpt),
-            "## Architecture Signals",
+            "## 架构线索",
             self._architecture_signals(file_tree, key_files),
-            "## Modules",
+            "## 模块线索",
             self._modules(file_tree),
-            "## Data Flow",
+            "## 数据流判断",
             self._data_flow(key_files, key_file_excerpts),
-            "## System Design",
+            "## 系统设计位置",
             self._system_design(repo_name, default_branch, repo_context_used),
-            "## Engineering Notes",
+            "## 工程备注",
             self._engineering_notes(metadata, file_tree, key_files),
-            "## Limitations",
+            "## 限制",
             (
-                "This is rule-based analysis only. It does not recursively scan source "
-                "files, does not call an LLM, does not clone the repository, and does "
-                "not invoke Codex, Hermes, Claude Code, or Paperclip."
+                "这是规则型分析结果。当前不会递归扫描源码，不会调用 LLM，"
+                "不会 clone 仓库，也不会调用 Codex、Hermes、Claude Code 或 Paperclip。"
             ),
         ]
         return "\n\n".join(sections)
@@ -117,13 +116,17 @@ class RepoAnalyzerExecutor(BaseExecutor):
         metadata: dict[str, Any],
         readme_excerpt: str,
     ) -> str:
-        description = metadata.get("description") or "No description metadata found."
-        language = metadata.get("language") or "unknown"
-        readme_signal = self._compact(readme_excerpt, 320) or "No README excerpt found."
+        description = metadata.get("description") or "未发现仓库描述信息"
+        language = metadata.get("language") or "未知"
+        readme_signal = (
+            f"已读取 README 摘要，长度约 {len(readme_excerpt)} 字符。"
+            if readme_excerpt
+            else "未读取到 README 摘要。"
+        )
         return (
-            f"Repository `{repo_name}` ({repo_url or 'no URL'}) was analyzed with "
-            f"repo_context_used={repo_context_used}. Description: {description}. "
-            f"Primary language metadata: {language}.\n\nREADME signal: {readme_signal}"
+            f"`{repo_name}`（{repo_url or '未提供 URL'}）已基于 RepoContext 进行分析。"
+            f"repo_context_used={repo_context_used}。仓库描述：{description}。"
+            f"GitHub 语言元数据：{language}。\n\nREADME 线索：{readme_signal}"
         )
 
     def _architecture_signals(
@@ -135,39 +138,41 @@ class RepoAnalyzerExecutor(BaseExecutor):
         lower_files = {item.lower() for item in file_tree + key_files}
 
         if "package.json" in lower_files:
-            signals.append("`package.json` suggests a Node/TypeScript/JavaScript project.")
+            signals.append("发现 `package.json`，项目可能包含 Node.js / TypeScript / JavaScript 工程。")
         if "pyproject.toml" in lower_files or "requirements.txt" in lower_files:
-            signals.append("Python packaging files suggest a Python project.")
+            signals.append("发现 Python 构建或依赖文件，项目可能包含 Python 工程。")
         if "dockerfile" in lower_files:
-            signals.append("`Dockerfile` suggests containerization support.")
+            signals.append("发现 `Dockerfile`，存在容器化部署线索。")
         if "readme.md" in lower_files:
-            signals.append("`README.md` provides first-pass product and architecture context.")
+            signals.append("发现 `README.md`，可作为产品目标和架构入口说明。")
 
         if not signals:
-            signals.append("No high-signal package or deployment files were found at root.")
+            signals.append("根目录未发现高信号的包管理或部署文件。")
 
-        signals.append(f"Root entries observed: {file_tree[:30]}.")
-        signals.append(f"Key files fetched: {key_files or 'none'}.")
+        signals.append(f"已观察到的根目录条目：{file_tree[:30]}。")
+        signals.append(f"已读取的关键文件：{key_files or '无'}。")
         return "\n".join(f"- {signal}" for signal in signals)
 
     def _modules(self, file_tree: list[str]) -> str:
         module_hints = {
-            "docs": "documentation and design notes",
-            "client": "frontend/client application",
-            "server": "backend/server application",
-            "src": "primary source tree",
-            "runtime": "runtime implementation layer",
-            "contracts": "JSON schemas or interface contracts",
-            "memory": "memory persistence assets",
+            ".openclaw": "OpenClaw 配置、提示词和技能相关目录",
+            "docs": "文档与设计说明",
+            "client": "前端或客户端应用目录",
+            "server": "后端或服务端应用目录",
+            "src": "主要源码目录",
+            "runtime": "运行时代码目录",
+            "contracts": "JSON Schema 或接口契约目录",
+            "memory": "SQLite memory 相关资产",
+            "workspace": "任务工作区",
         }
         found = []
         lower_entries = {item.lower(): item for item in file_tree}
         for key, meaning in module_hints.items():
             if key in lower_entries:
-                found.append(f"`{lower_entries[key]}`: {meaning}")
+                found.append(f"`{lower_entries[key]}`：{meaning}")
 
         if not found:
-            return "No known module directory hints were found in the root file tree."
+            return "暂未从根目录文件树中识别出已知模块，需要进一步扫描源码确认职责。"
         return "\n".join(f"- {item}" for item in found)
 
     def _data_flow(
@@ -175,17 +180,14 @@ class RepoAnalyzerExecutor(BaseExecutor):
         key_files: list[str],
         key_file_excerpts: dict[str, str],
     ) -> str:
-        available = ", ".join(key_files) if key_files else "no key files"
+        available = "、".join(key_files) if key_files else "无关键文件"
         excerpt_signal = ""
         if key_file_excerpts:
-            excerpt_signal = (
-                " Key file excerpts were available, but they are root-level snippets "
-                "and not enough for source-level data-flow claims."
-            )
+            excerpt_signal = " 已读取部分关键文件片段，但这些仍不足以支持源码级数据流判断。"
         return (
-            f"Only README, root file tree, and {available} were inspected. "
-            "The executor cannot infer complete runtime data flow without recursive "
-            f"source inspection.{excerpt_signal}"
+            f"当前只检查了 README、根目录文件树和 {available}。"
+            "没有递归扫描源码，因此不能推断完整运行时数据流。"
+            f"{excerpt_signal}"
         )
 
     def _system_design(
@@ -195,10 +197,10 @@ class RepoAnalyzerExecutor(BaseExecutor):
         repo_context_used: bool,
     ) -> str:
         return (
-            f"`{repo_name}` was analyzed from default_branch `{default_branch}`. "
-            "RepoAnalysisWorkflow injected RepoContext into Task.description, then "
-            "StandardTaskWorkflow ran this executor, Darwin reflection, and memory "
-            f"writeback. repo_context_used={repo_context_used}."
+            f"`{repo_name}` 基于默认分支 `{default_branch}` 的 RepoContext 进入分析流程。"
+            "RepoAnalysisWorkflow 将 RepoContext 写入 Task.description，随后由 "
+            "StandardTaskWorkflow 调用本 executor、Darwin 反思和 memory 写回。"
+            f"repo_context_used={repo_context_used}。"
         )
 
     def _engineering_notes(
@@ -208,12 +210,18 @@ class RepoAnalyzerExecutor(BaseExecutor):
         key_files: list[str],
     ) -> str:
         notes = [
-            f"Root file count inspected: {len(file_tree)}.",
-            f"Key files inspected: {key_files or 'none'}.",
+            f"根目录条目数量：{len(file_tree)}。",
+            f"关键文件：{key_files or '无'}。",
         ]
-        for key in ("stars", "forks", "open_issues", "license"):
+        labels = {
+            "stars": "stars",
+            "forks": "forks",
+            "open_issues": "open issues",
+            "license": "license",
+        }
+        for key, label in labels.items():
             if key in metadata:
-                notes.append(f"{key}: {metadata[key]}.")
+                notes.append(f"{label}：{metadata[key]}。")
         return "\n".join(f"- {note}" for note in notes)
 
     def _line_value(self, lines: list[str], prefix: str) -> str:

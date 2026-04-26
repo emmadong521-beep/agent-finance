@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.0.1 - Chinese Repo Analysis Report
+
+- Render repo analysis Markdown reports in Chinese
+- Generate Chinese architecture, module, data-flow, and system-design sections
+- Localize RepoAnalyzerExecutor Markdown output
+- Document Chinese Markdown report behavior
+
 ## v1.0 - External Executor Adapter Preparation
 
 - Add ExecutorRunConfig
