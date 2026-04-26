@@ -17,6 +17,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from runtime.executors.mock_executor import MockExecutor
+from runtime.executors.repo_analyzer_executor import RepoAnalyzerExecutor
 from runtime.memory.init_db import init_db
 from runtime.memory.memory_service import MemoryService
 from runtime.reflection.darwin_reflector import DarwinReflector
@@ -50,6 +51,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Print compact JSON output.",
     )
+    parser.add_argument(
+        "--executor",
+        default="repo-analyzer",
+        choices=("mock", "repo-analyzer"),
+        help="Executor to use: repo-analyzer or mock. Defaults to repo-analyzer.",
+    )
     return parser.parse_args(argv)
 
 
@@ -64,9 +71,10 @@ def main(argv: list[str] | None = None) -> int:
 
         init_db()
         memory_service = MemoryService()
+        executor = build_executor(args.executor)
         standard_workflow = StandardTaskWorkflow(
             memory_service=memory_service,
-            executor=MockExecutor(),
+            executor=executor,
             reflector=DarwinReflector(),
         )
         workflow = RepoAnalysisWorkflow(standard_workflow=standard_workflow)
@@ -91,6 +99,15 @@ def main(argv: list[str] | None = None) -> int:
     finally:
         if memory_service is not None:
             memory_service.close()
+
+
+def build_executor(name: str) -> MockExecutor | RepoAnalyzerExecutor:
+    if name == "mock":
+        return MockExecutor()
+    if name == "repo-analyzer":
+        return RepoAnalyzerExecutor()
+    print(f"ERROR: unknown executor '{name}'", file=sys.stderr)
+    raise SystemExit(2)
 
 
 if __name__ == "__main__":

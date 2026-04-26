@@ -63,6 +63,8 @@ Run repo analysis directly from a GitHub URL:
 python3 runtime/workflows/run_repo_analysis.py https://github.com/emmadong521-beep/agent-os
 ```
 
+The CLI defaults to the rule-based `repo-analyzer` executor.
+
 Use a custom project name:
 
 ```bash
@@ -74,6 +76,15 @@ Use compact JSON output:
 ```bash
 python3 runtime/workflows/run_repo_analysis.py https://github.com/emmadong521-beep/agent-os --compact
 ```
+
+Fallback to the old mock executor:
+
+```bash
+python3 runtime/workflows/run_repo_analysis.py https://github.com/emmadong521-beep/agent-os --executor mock
+```
+
+The current `repo-analyzer` is deterministic and rule-based. It is not an LLM
+and does not inspect files beyond the RepoContext supplied by `GitHubRepoFetcher`.
 
 ## Reusing StandardTaskWorkflow
 

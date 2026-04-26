@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.9 - Rule-Based Repo Analyzer Executor
+
+- Add RepoAnalyzerExecutor for rule-based repository analysis
+- Generate structured Markdown analysis from RepoContext-enriched task descriptions
+- Add --executor option to repo analysis CLI
+- Default repo analysis CLI to repo-analyzer
+- Document repo analyzer executor
+
 ## v0.8.1 - Repo Analysis CLI
 
 - Add command-line entrypoint for running repo analysis by GitHub URL
