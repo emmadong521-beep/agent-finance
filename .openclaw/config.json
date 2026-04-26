@@ -7,7 +7,11 @@
   },
   "execution": {
     "default_engine": "hermes",
-    "engines": ["hermes", "claude-code", "codex"]
+    "engines": [
+      "hermes",
+      "claude-code",
+      "codex"
+    ]
   },
   "skills": {
     "dirs": [
@@ -16,6 +20,9 @@
   },
   "workflows": {
     "default": "standard_task",
-    "available": ["standard_task", "repo_analysis"]
+    "available": [
+      "standard_task",
+      "repo_analysis"
+    ]
   }
 }

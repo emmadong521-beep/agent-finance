@@ -8,6 +8,7 @@
 - Add task prefetch flow for project context, patterns, anti-patterns, and relevant memories
 - Add memory demo script
 - Add SQLite memory backbone documentation
+- Finalize v0.2 formatting and SQLite memory configuration
 
 ## v0.1 (Initial)
 
