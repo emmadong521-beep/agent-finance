@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-os.local/contracts/workflow_result_schema.json",
+  "title": "WorkflowResult",
+  "description": "Normalized result returned by an Agent OS workflow.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "workflow_name",
+    "status",
+    "execution_summary",
+    "reflection_summary",
+    "written_memory_ids"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workflow_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "failed",
+        "skipped",
+        "not_implemented"
+      ]
+    },
+    "execution_summary": {
+      "type": "string"
+    },
+    "reflection_summary": {
+      "type": "string"
+    },
+    "written_memory_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "output": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "error": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

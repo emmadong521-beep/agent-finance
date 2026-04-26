@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.5 - Standard Task Workflow
+
+- Add WorkflowResult model
+- Add StandardTaskWorkflow to connect memory prefetch, executor execution, Darwin reflection, and memory writeback
+- Add end-to-end workflow demo
+- Add workflow result JSON schema
+- Add Standard Task Workflow documentation
+
 ## v0.4 - Darwin Memory Writeback
 
 - Add ReflectionResult and MemoryCandidate models
