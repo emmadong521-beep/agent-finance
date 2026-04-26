@@ -1,6 +1,6 @@
 {
   "agent_name": "agent-os",
-  "version": "0.1",
+  "version": "0.2",
   "memory": {
     "backend": "sqlite",
     "db_path": "memory/agent_os.db"
