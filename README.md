@@ -86,6 +86,35 @@ python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/b
 
 Use `--format json` for structured analysis output or `--output <path>` to save the result to a file.
 
+Rule mode is the default. To use the LLM financial analyst executor for Markdown reports:
+
+```bash
+python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/budget_actual_sample.csv --mode llm --format markdown
+```
+
+`--format json` always returns the structured analyzer summary and does not call an LLM.
+
+## LLM Configuration
+
+Agent Finance uses provider-neutral LLM configuration for OpenAI-compatible Chat Completions APIs.
+
+Recommended local configuration:
+
+```bash
+export FINANCE_LLM_API_KEY="your-key"
+export FINANCE_LLM_BASE_URL="your-openai-compatible-base-url"
+export FINANCE_LLM_MODEL="your-model-name"
+```
+
+Volcengine example:
+
+```bash
+export FINANCE_LLM_BASE_URL="https://ark.cn-beijing.volces.com/api/coding/v3"
+export FINANCE_LLM_MODEL="glm-5.1"
+```
+
+Do not commit real API keys. Use `.env.example` as a template only.
+
 ## Project Structure
 
 ```text

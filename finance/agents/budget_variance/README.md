@@ -74,6 +74,18 @@ Save a report to file:
 python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/budget_actual_sample.csv --format markdown --output workspace/budget_variance_report.md
 ```
 
+## v1.7 LLM Financial Analyst Executor
+
+v1.7 adds provider-neutral LLM report generation for Markdown output. The CLI now supports `--mode rule` and `--mode llm`. Rule mode is the default. JSON output does not call the LLM.
+
+Run an LLM-generated Markdown report:
+
+```bash
+python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/budget_actual_sample.csv --mode llm --format markdown
+```
+
+Configure the LLM with `FINANCE_LLM_API_KEY`, `FINANCE_LLM_BASE_URL`, and `FINANCE_LLM_MODEL`.
+
 ## Related Files
 
 - `scope.md`: MVP input, output, and non-goals
@@ -84,5 +96,6 @@ python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/b
 - `../../../common/csv_loader.py`: budget actual CSV loader
 - `analyzer.py`: rule-based budget variance analyzer
 - `report_renderer.py`: Chinese Markdown report renderer
+- `llm_reporter.py`: LLM financial analyst report generator
 - `run_budget_variance.py`: CLI entrypoint
 - `../../../skills/budget_variance/SKILL.md`: Budget Variance Skill definition

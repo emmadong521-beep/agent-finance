@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.7 - LLM Financial Analyst Executor
+
+- Add provider-neutral LLM environment variable design
+- Add OpenAI-compatible Chat Completions client configuration
+- Add FINANCE_LLM_* environment variables with fallback compatibility
+- Add LLM financial analyst report generator
+- Add rule and LLM modes to Budget Variance CLI and UI
+- Add .env.example and environment file ignore rules
+- Document LLM security boundaries
+
 ## v1.6 - Budget Variance Agent CLI
 
 - Add command-line entrypoint for Budget Variance Agent

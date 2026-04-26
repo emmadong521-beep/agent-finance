@@ -12,6 +12,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from finance.agents.budget_variance.analyzer import analyze_budget_variance
+from finance.agents.budget_variance.llm_reporter import generate_llm_budget_variance_report
 from finance.agents.budget_variance.report_renderer import (
     format_amount,
     format_rate,
@@ -44,6 +45,13 @@ def main() -> None:
     with st.sidebar:
         st.header("数据与阈值")
         uploaded_file = st.file_uploader("上传预算实际 CSV", type=["csv"])
+        mode = st.radio(
+            "报告生成模式",
+            options=["rule", "llm"],
+            index=0,
+            horizontal=True,
+            help="rule 使用本地规则渲染；llm 使用 FINANCE_LLM_* 配置调用 OpenAI-compatible API。",
+        )
         materiality_rate = st.number_input(
             "materiality_rate",
             min_value=0.0,
@@ -82,9 +90,13 @@ def main() -> None:
             materiality_rate=materiality_rate,
             materiality_amount=materiality_amount,
         )
-        report = render_budget_variance_report(summary)
+        if mode == "llm":
+            report = generate_llm_budget_variance_report(summary)
+        else:
+            report = render_budget_variance_report(summary)
 
         st.caption(f"数据来源：{uploaded_file.name if uploaded_file else DEFAULT_SAMPLE_PATH}")
+        st.caption(f"报告模式：{mode}")
         _render_kpis(summary)
         _render_major_variance_table(summary)
         _render_insight_flags(summary.insight_flags)
@@ -98,8 +110,8 @@ def main() -> None:
             mime="text/markdown",
             use_container_width=True,
         )
-    except ValueError as exc:
-        st.error(f"CSV 数据校验失败：{exc}")
+    except (RuntimeError, ValueError) as exc:
+        st.error(f"数据处理失败：{exc}")
     finally:
         if temp_path is not None:
             Path(temp_path).unlink(missing_ok=True)

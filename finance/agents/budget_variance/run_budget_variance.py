@@ -12,6 +12,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from finance.agents.budget_variance.analyzer import analyze_budget_variance
+from finance.agents.budget_variance.llm_reporter import generate_llm_budget_variance_report
 from finance.agents.budget_variance.report_renderer import render_budget_variance_report
 from finance.common.csv_loader import load_budget_actual_csv
 
@@ -27,7 +28,7 @@ def main() -> int:
             materiality_rate=args.materiality_rate,
             materiality_amount=args.materiality_amount,
         )
-        output = _format_output(summary, args.format)
+        output = _format_output(summary, args.format, args.mode)
 
         if args.output:
             output_path = Path(args.output)
@@ -44,6 +45,9 @@ def main() -> int:
     except ValueError as error:
         print(f"数据处理失败: {error}", file=sys.stderr)
         return 1
+    except RuntimeError as error:
+        print(f"数据处理失败: {error}", file=sys.stderr)
+        return 1
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -56,6 +60,12 @@ def _build_parser() -> argparse.ArgumentParser:
         choices=["json", "markdown"],
         default="markdown",
         help="输出格式，默认 markdown",
+    )
+    parser.add_argument(
+        "--mode",
+        choices=["rule", "llm"],
+        default="rule",
+        help="报告生成模式，默认 rule；json 输出不会调用 LLM",
     )
     parser.add_argument(
         "--materiality-rate",
@@ -73,9 +83,11 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _format_output(summary, output_format: str) -> str:
+def _format_output(summary, output_format: str, mode: str) -> str:
     if output_format == "json":
         return json.dumps(asdict(summary), ensure_ascii=False, indent=2)
+    if mode == "llm":
+        return generate_llm_budget_variance_report(summary)
     return render_budget_variance_report(summary)
 
 

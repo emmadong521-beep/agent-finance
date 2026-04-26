@@ -16,6 +16,7 @@ python3 finance/agents/budget_variance/run_budget_variance.py <input_csv>
 
 - `input_csv`: required CSV path.
 - `--format`: optional output format, `markdown` or `json`. Defaults to `markdown`.
+- `--mode`: optional report mode, `rule` or `llm`. Defaults to `rule`. JSON output never calls the LLM.
 - `--materiality-rate`: optional float threshold. Defaults to `0.1`.
 - `--materiality-amount`: optional float threshold. Defaults to `50000`.
 - `--output`: optional output file path. When provided, the CLI writes UTF-8 content to the file and prints a confirmation line.
@@ -28,13 +29,19 @@ python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/b
 
 The output is a Chinese Markdown report with sections for overall conclusion, revenue execution, cost and expense execution, major variance items, attribution, profit and cash flow impact, management recommendations, next-month focus, and human review notice.
 
+LLM Markdown mode:
+
+```bash
+python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/budget_actual_sample.csv --mode llm --format markdown
+```
+
 ## JSON Output Example
 
 ```bash
 python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/budget_actual_sample.csv --format json
 ```
 
-The output is a JSON serialization of `BudgetVarianceSummary`, including:
+The output is a JSON serialization of `BudgetVarianceSummary`. It does not call the LLM, even if `--mode llm` is provided. It includes:
 
 - `periods`
 - `total_budget`
@@ -64,6 +71,7 @@ Expected stdout:
 ## Current Boundaries
 
 - 规则型分析，不调用 LLM
+- LLM mode only affects Markdown report generation
 - 不接真实 ERP
 - 不接真实银行流水
 - 不生成审计意见

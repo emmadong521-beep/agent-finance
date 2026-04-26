@@ -9,6 +9,7 @@ v1.5 adds a local Streamlit Web UI for the Budget Variance & Business Insight Ag
 - Page title: `Agent Finance`
 - Subtitle: `预算执行分析与异常归因 Agent`
 - CSV upload
+- Rule / LLM report mode selection
 - Default sample data from `finance/examples/budget_actual_sample.csv`
 - Configurable `materiality_rate`
 - Configurable `materiality_amount`
@@ -56,7 +57,8 @@ The uploaded CSV must include:
 
 ## Current Boundaries
 
-- 不调用 LLM
+- Rule mode 不调用 LLM
+- LLM mode 只使用 `FINANCE_LLM_*` 或兼容 fallback 环境变量调用 OpenAI-compatible Chat Completions API
 - 不接真实 ERP
 - 不接真实银行流水
 - 不做登录权限

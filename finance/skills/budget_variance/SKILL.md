@@ -39,12 +39,14 @@ CSV 必须包含以下字段：
 2. 使用 `analyze_budget_variance(dataset)` 生成 `BudgetVarianceSummary`。
 3. 查看 `major_items`、`department_summary`、`category_summary` 和 `insight_flags`。
 4. 使用 `render_budget_variance_report(summary)` 生成中文 Markdown 报告。
-5. 如需本地交互界面，运行 Streamlit UI。
+5. 如需 LLM 报告草稿，配置 `FINANCE_LLM_API_KEY`、`FINANCE_LLM_BASE_URL`、`FINANCE_LLM_MODEL` 后使用 `--mode llm`。
+6. 如需本地交互界面，运行 Streamlit UI。
 
 ## Output Format
 
 - JSON summary：用于程序化查看指标、重大偏差和分类汇总
 - Markdown report：用于管理层阅读和人工复核
+- LLM Markdown draft：基于结构化分析结果生成的中文报告草稿
 - UI view：展示 KPI 卡片、重大偏差表、管理关注提示和报告下载
 
 ## Human Review Boundary
@@ -55,7 +57,7 @@ CSV 必须包含以下字段：
 
 - 不接真实 ERP
 - 不接真实银行流水
-- 不调用 LLM 生成判断
+- 不把 API key 写入日志、报告或 memory
 - 不做审计意见
 - 不替代人工财务判断
 - 不处理登录、权限或审批流
@@ -68,4 +70,8 @@ streamlit run apps/budget_variance_ui.py
 
 ```bash
 python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/budget_actual_sample.csv --format markdown
+```
+
+```bash
+python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/budget_actual_sample.csv --mode llm --format markdown
 ```
