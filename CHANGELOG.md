@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.4 - Budget Variance Report Renderer
+
+- Add Chinese Markdown renderer for budget variance analysis
+- Render management-ready budget execution reports
+- Add major variance table and management recommendations
+- Add budget report rendering demo and documentation
+
 ## v1.3 - Budget Variance Analyzer
 
 - Add budget variance analysis models

@@ -38,6 +38,16 @@ Run the analyzer demo from the repository root:
 python3 finance/agents/budget_variance/demo_analyze_budget_variance.py
 ```
 
+## v1.4 Markdown Report Renderer
+
+v1.4 adds a rule-based Chinese Markdown renderer that converts `BudgetVarianceSummary` into a management-readable budget execution variance report.
+
+Run the report demo from the repository root:
+
+```bash
+python3 finance/agents/budget_variance/demo_render_budget_report.py
+```
+
 ## Related Files
 
 - `scope.md`: MVP input, output, and non-goals
@@ -47,3 +57,4 @@ python3 finance/agents/budget_variance/demo_analyze_budget_variance.py
 - `../../../common/finance_models.py`: finance data models
 - `../../../common/csv_loader.py`: budget actual CSV loader
 - `analyzer.py`: rule-based budget variance analyzer
+- `report_renderer.py`: Chinese Markdown report renderer
