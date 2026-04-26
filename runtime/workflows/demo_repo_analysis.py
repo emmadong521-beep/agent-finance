@@ -1,4 +1,4 @@
-"""Demo: run the v0.6 RepoAnalysisWorkflow end to end.
+"""Demo: run the v0.8 RepoAnalysisWorkflow with GitHub RepoContext.
 
 Usage:
     python3 runtime/workflows/demo_repo_analysis.py
@@ -18,6 +18,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from runtime.executors.mock_executor import MockExecutor
 from runtime.memory.init_db import init_db
 from runtime.memory.memory_service import MemoryService
+from runtime.repo.github_fetcher import GitHubRepoFetcher
 from runtime.reflection.darwin_reflector import DarwinReflector
 from runtime.workflows.repo_analysis import RepoAnalysisInput, RepoAnalysisWorkflow
 from runtime.workflows.standard_task import StandardTaskWorkflow
@@ -32,11 +33,15 @@ def main() -> None:
         reflector=DarwinReflector(),
     )
     workflow = RepoAnalysisWorkflow(standard_workflow=standard_workflow)
+    repo_context = GitHubRepoFetcher().fetch(
+        "https://github.com/emmadong521-beep/agent-os"
+    )
 
     input_data = RepoAnalysisInput(
         repo_url="https://github.com/emmadong521-beep/agent-os",
         repo_name="agent-os",
         project_name="agent-os",
+        repo_context=repo_context,
     )
 
     result = workflow.run(input_data)

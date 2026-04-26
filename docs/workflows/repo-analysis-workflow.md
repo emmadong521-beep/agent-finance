@@ -7,8 +7,9 @@ summarize architecture, identify modules, and preserve reusable findings. It
 should use the same memory, execution, reflection, and writeback loop as other
 tasks instead of becoming a separate path.
 
-`RepoAnalysisWorkflow` is the v0.6 facade that routes repository analysis
-requests into `StandardTaskWorkflow`.
+`RepoAnalysisWorkflow` is the facade that routes repository analysis requests
+into `StandardTaskWorkflow`. As of v0.8, it can also consume `RepoContext`
+created by `GitHubRepoFetcher`.
 
 ## Input and Result Models
 
@@ -19,6 +20,7 @@ requests into `StandardTaskWorkflow`.
 - `repo_name`
 - `analysis_goal`
 - `project_name`
+- `repo_context`
 - `metadata`
 
 `RepoAnalysisResult` returns the repository-specific view:
@@ -32,6 +34,26 @@ requests into `StandardTaskWorkflow`.
 
 The required analysis sections are `overview`, `architecture`, `modules`,
 `data_flow`, `system_design`, and `engineering_notes`.
+
+## RepoContext Integration
+
+`GitHubRepoFetcher` can fetch public repository context using the GitHub REST API
+and raw content endpoints. The resulting `RepoContext` contains the default
+branch, README content, root file tree, key files, and repository metadata.
+
+When `RepoAnalysisInput.repo_context` is provided, `RepoAnalysisWorkflow` uses it
+to enrich the generated task description with:
+
+- default branch
+- metadata
+- README excerpt
+- first 50 root file tree entries
+- key file names
+- key file excerpts
+
+The workflow also generates rule-based analysis sections from this context.
+These sections are conservative: they explain structural clues from README, root
+files, and key files without claiming a full codebase analysis.
 
 ## Reusing StandardTaskWorkflow
 
@@ -47,19 +69,21 @@ That means repo analysis automatically gets:
 - SQLite memory writeback
 - a normalized `WorkflowResult`
 
-## v0.6 Boundaries
+## Boundaries
 
-v0.6 does not clone repositories, fetch GitHub contents, scan local files, or
-call a real LLM. The analysis sections are placeholders derived from the
-workflow result and request metadata.
+v0.8 supports `RepoContext`, but still does not clone repositories, recursively
+scan local files, or call a real LLM. The analysis sections are rule-based and
+derived from fetched README, root file tree, key files, metadata, and workflow
+result.
 
-v0.6 also does not connect real Hermes, Claude Code, Codex, AutoResearch, or
-Paperclip. It proves the workflow shape without adding infrastructure.
+It also does not connect real Hermes, Claude Code, Codex, AutoResearch, or
+Paperclip. It proves the context integration shape without adding execution
+infrastructure.
 
 ## Future Extensions
 
-GitHub fetch can populate repository metadata, trees, README content, and issue
-context before execution.
+GitHub fetch can expand beyond root-level context into recursive trees, selected
+source files, issue context, and pull request context.
 
 Codex or Hermes can replace `MockExecutor` to perform real codebase inspection
 through the existing executor abstraction.

@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.8 - Repo Context Integration
+
+- Integrate RepoContext into RepoAnalysisWorkflow
+- Enrich repository analysis task descriptions with README, file tree, key files, and metadata
+- Generate rule-based analysis sections from fetched repository context
+- Update repo analysis demo to fetch GitHub context before workflow execution
+- Document RepoContext integration
+
 ## v0.7 - GitHub Repo Fetcher
 
 - Add RepoContext model
