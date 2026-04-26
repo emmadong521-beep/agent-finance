@@ -1,0 +1,21 @@
+{
+  "agent_name": "agent-os",
+  "version": "0.1",
+  "memory": {
+    "backend": "sqlite",
+    "db_path": "memory/agent_os.db"
+  },
+  "execution": {
+    "default_engine": "hermes",
+    "engines": ["hermes", "claude-code", "codex"]
+  },
+  "skills": {
+    "dirs": [
+      ".openclaw/skills/core"
+    ]
+  },
+  "workflows": {
+    "default": "standard_task",
+    "available": ["standard_task", "repo_analysis"]
+  }
+}

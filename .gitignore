@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+
+# SQLite
+*.db
+
+# OS
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Node
+node_modules/
+
+# Workspace temp
+workspace/*
+!workspace/.gitkeep
