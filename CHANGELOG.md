@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3 - Executor Abstraction
+
+- Add BaseExecutor interface
+- Add Task, ExecutionContext, and ExecutionResult contracts
+- Add MockExecutor for local validation
+- Add placeholder Hermes, Claude Code, and Codex executors
+- Add task/result JSON schemas
+- Add executor abstraction documentation
+
 ## v0.2 - SQLite Memory Backbone
 
 - Add SQLite database initialization script

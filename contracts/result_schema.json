@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-os.local/contracts/result_schema.json",
+  "title": "ExecutionResult",
+  "description": "Normalized result returned by every Agent OS executor.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "executor_name",
+    "status",
+    "summary"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "executor_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "failed",
+        "skipped",
+        "not_implemented"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "output": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "error": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}
