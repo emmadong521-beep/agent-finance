@@ -66,6 +66,18 @@ MVP scope:
 
 See [finance/agents/budget_variance](finance/agents/budget_variance) for the detailed scope, template, and sample output.
 
+The Budget Variance Agent supports CSV files with English standard fields, Chinese field names, and common finance aliases. Chinese sample:
+
+```text
+finance/examples/budget_actual_cn_sample.csv
+```
+
+CLI example with Chinese headers:
+
+```bash
+python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/budget_actual_cn_sample.csv --format markdown
+```
+
 ## Local UI
 
 Run the Budget Variance Agent local Streamlit UI:

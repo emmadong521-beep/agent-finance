@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.8 - Flexible Finance CSV Mapping
+
+- Add flexible CSV field mapping for Budget Variance Agent
+- Support Chinese headers and common finance field aliases
+- Add Chinese budget actual sample CSV
+- Improve loader validation messages
+- Document supported CSV field aliases
+
 ## v1.7.1 - LLM Connection Diagnostics
 
 - Add friendly SSL EOF diagnostic for LLM API connection failures

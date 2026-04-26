@@ -45,6 +45,10 @@ def main() -> None:
     with st.sidebar:
         st.header("数据与阈值")
         uploaded_file = st.file_uploader("上传预算实际 CSV", type=["csv"])
+        st.caption(
+            "支持英文标准字段、中文字段名和常见业务别名。"
+            "中文样例：finance/examples/budget_actual_cn_sample.csv。"
+        )
         mode = st.radio(
             "报告生成模式",
             options=["rule", "llm"],
@@ -67,11 +71,14 @@ def main() -> None:
             step=10000.0,
             format="%.2f",
         )
-        st.caption("未上传文件时默认使用 finance/examples/budget_actual_sample.csv。")
+        st.caption("未上传文件时默认使用英文样例 finance/examples/budget_actual_sample.csv。")
         run_analysis = st.button("生成分析报告", type="primary", use_container_width=True)
 
     if not run_analysis:
-        st.info("请上传 CSV 或使用默认样例数据，然后点击生成分析报告。")
+        st.info(
+            "请上传 CSV 或使用默认样例数据，然后点击生成分析报告。"
+            "CSV 可使用英文标准字段、中文字段名或支持的字段别名。"
+        )
         st.markdown("</div>", unsafe_allow_html=True)
         return
 

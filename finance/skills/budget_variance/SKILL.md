@@ -19,7 +19,7 @@ description: 使用 Budget Variance & Business Insight Agent 分析预算实际 
 
 ## Required Inputs
 
-CSV 必须包含以下字段：
+内部标准字段仍是英文：
 
 - `period`
 - `department`
@@ -30,6 +30,14 @@ CSV 必须包含以下字段：
 - `variance_rate`
 - `business_driver`
 - `remark`
+
+上传 CSV 可以使用英文标准字段、中文字段或支持的业务别名。
+
+中文字段模板：
+
+```csv
+期间,部门,科目,预算金额,实际金额,差异金额,差异率,业务原因,备注
+```
 
 `variance_amount` 和 `variance_rate` 可为空；loader 会基于预算和实际金额自动计算。
 

@@ -86,14 +86,38 @@ python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/b
 
 Configure the LLM with `FINANCE_LLM_API_KEY`, `FINANCE_LLM_BASE_URL`, and `FINANCE_LLM_MODEL`.
 
+## v1.8 Flexible CSV Mapping
+
+v1.8 adds flexible CSV field mapping. The loader supports English standard fields, Chinese fields, and common finance aliases.
+
+English header example:
+
+```csv
+period,department,account,budget_amount,actual_amount,variance_amount,variance_rate,business_driver,remark
+```
+
+Chinese header example:
+
+```csv
+期间,部门,科目,预算金额,实际金额,差异金额,差异率,业务原因,备注
+```
+
+Run the CLI with the Chinese sample:
+
+```bash
+python3 finance/agents/budget_variance/run_budget_variance.py finance/examples/budget_actual_cn_sample.csv --format markdown
+```
+
 ## Related Files
 
 - `scope.md`: MVP input, output, and non-goals
 - `sample_output.md`: sample report output
 - `../../../templates/budget_variance_report.md`: report template
 - `../../../examples/budget_actual_sample.csv`: sample budget vs actual data
+- `../../../examples/budget_actual_cn_sample.csv`: Chinese-header sample budget vs actual data
 - `../../../common/finance_models.py`: finance data models
 - `../../../common/csv_loader.py`: budget actual CSV loader
+- `../../../common/field_mapping.py`: supported CSV field aliases
 - `analyzer.py`: rule-based budget variance analyzer
 - `report_renderer.py`: Chinese Markdown report renderer
 - `llm_reporter.py`: LLM financial analyst report generator
