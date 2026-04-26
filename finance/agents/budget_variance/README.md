@@ -28,6 +28,16 @@ Run the demo from the repository root:
 python3 finance/agents/budget_variance/demo_load_budget_data.py
 ```
 
+## v1.3 Rule-Based Analyzer
+
+v1.3 adds a rule-based analyzer that classifies material variance items by direction, severity, and category, summarizes results by department and category, and emits Chinese insight flags for management review.
+
+Run the analyzer demo from the repository root:
+
+```bash
+python3 finance/agents/budget_variance/demo_analyze_budget_variance.py
+```
+
 ## Related Files
 
 - `scope.md`: MVP input, output, and non-goals
@@ -36,3 +46,4 @@ python3 finance/agents/budget_variance/demo_load_budget_data.py
 - `../../../examples/budget_actual_sample.csv`: sample budget vs actual data
 - `../../../common/finance_models.py`: finance data models
 - `../../../common/csv_loader.py`: budget actual CSV loader
+- `analyzer.py`: rule-based budget variance analyzer

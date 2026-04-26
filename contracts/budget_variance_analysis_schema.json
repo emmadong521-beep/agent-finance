@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-finance.local/contracts/budget_variance_analysis_schema.json",
+  "title": "BudgetVarianceSummary",
+  "description": "Structured rule-based analysis output for budget variance data.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "periods",
+    "total_budget",
+    "total_actual",
+    "total_variance",
+    "total_variance_rate",
+    "record_count",
+    "material_variance_count",
+    "unfavorable_variance_count",
+    "favorable_variance_count",
+    "major_items",
+    "department_summary",
+    "category_summary",
+    "insight_flags"
+  ],
+  "properties": {
+    "periods": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Reporting periods included in the dataset."
+    },
+    "total_budget": {
+      "type": "number",
+      "description": "Total budget amount."
+    },
+    "total_actual": {
+      "type": "number",
+      "description": "Total actual amount."
+    },
+    "total_variance": {
+      "type": "number",
+      "description": "Total actual amount minus total budget amount."
+    },
+    "total_variance_rate": {
+      "type": "number",
+      "description": "Total variance divided by total budget."
+    },
+    "record_count": {
+      "type": "integer",
+      "description": "Number of input records analyzed."
+    },
+    "material_variance_count": {
+      "type": "integer",
+      "description": "Number of records exceeding materiality thresholds."
+    },
+    "unfavorable_variance_count": {
+      "type": "integer",
+      "description": "Number of records classified as unfavorable by finance semantics."
+    },
+    "favorable_variance_count": {
+      "type": "integer",
+      "description": "Number of records classified as favorable by finance semantics."
+    },
+    "major_items": {
+      "type": "array",
+      "description": "High or medium severity variance items, sorted by absolute variance amount descending.",
+      "items": {
+        "$ref": "#/$defs/BudgetVarianceItem"
+      }
+    },
+    "department_summary": {
+      "type": "object",
+      "description": "Budget, actual, variance, and record count summary by department.",
+      "additionalProperties": {
+        "$ref": "#/$defs/AmountSummary"
+      }
+    },
+    "category_summary": {
+      "type": "object",
+      "description": "Budget, actual, variance, and record count summary by classified category.",
+      "additionalProperties": {
+        "$ref": "#/$defs/AmountSummary"
+      }
+    },
+    "insight_flags": {
+      "type": "array",
+      "description": "Rule-based Chinese management review prompts.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "BudgetVarianceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "period",
+        "department",
+        "account",
+        "budget_amount",
+        "actual_amount",
+        "variance_amount",
+        "variance_rate",
+        "direction",
+        "severity",
+        "category",
+        "business_driver",
+        "remark"
+      ],
+      "properties": {
+        "period": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "budget_amount": {
+          "type": "number"
+        },
+        "actual_amount": {
+          "type": "number"
+        },
+        "variance_amount": {
+          "type": "number"
+        },
+        "variance_rate": {
+          "type": "number"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "over_budget",
+            "under_budget",
+            "on_budget"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "revenue_or_cash",
+            "cost",
+            "expense",
+            "other"
+          ]
+        },
+        "business_driver": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      }
+    },
+    "AmountSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "budget_amount",
+        "actual_amount",
+        "variance_amount",
+        "record_count"
+      ],
+      "properties": {
+        "budget_amount": {
+          "type": "number"
+        },
+        "actual_amount": {
+          "type": "number"
+        },
+        "variance_amount": {
+          "type": "number"
+        },
+        "record_count": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

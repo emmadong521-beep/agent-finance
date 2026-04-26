@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.3 - Budget Variance Analyzer
+
+- Add budget variance analysis models
+- Add material variance, direction, severity, and category classification
+- Add department and category summaries
+- Add insight flags for management review
+- Add budget variance analysis demo and documentation
+
 ## v1.2 - Finance Data Loader
 
 - Add BudgetActualRecord and FinanceDataset models
