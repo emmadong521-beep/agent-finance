@@ -13,14 +13,14 @@ Use the `FINANCE_LLM_*` environment variables:
 ```bash
 export FINANCE_LLM_API_KEY="your-key"
 export FINANCE_LLM_BASE_URL="your-openai-compatible-base-url"
-export FINANCE_LLM_MODEL="your-model-name"
+export FINANCE_LLM_MODEL="your-model-or-endpoint-id"
 ```
 
 ## Volcengine Example
 
 ```bash
 export FINANCE_LLM_BASE_URL="https://ark.cn-beijing.volces.com/api/coding/v3"
-export FINANCE_LLM_MODEL="glm-5.1"
+export FINANCE_LLM_MODEL="your-model-or-endpoint-id"
 ```
 
 For Volcengine standard inference, the base URL is usually:
@@ -66,7 +66,7 @@ OpenRouter:
 ```bash
 export FINANCE_LLM_API_KEY="your-key"
 export FINANCE_LLM_BASE_URL="https://openrouter.ai/api/v1"
-export FINANCE_LLM_MODEL="your-model-name"
+export FINANCE_LLM_MODEL="your-model-or-endpoint-id"
 ```
 
 ## Compatibility Fallbacks
@@ -92,7 +92,7 @@ Model:
 1. `FINANCE_LLM_MODEL`
 2. `ARK_MODEL`
 3. `OPENAI_MODEL`
-4. `glm-5.1`
+4. `your-model-or-endpoint-id`
 
 ## Missing API Key
 

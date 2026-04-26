@@ -103,14 +103,14 @@ Recommended local configuration:
 ```bash
 export FINANCE_LLM_API_KEY="your-key"
 export FINANCE_LLM_BASE_URL="your-openai-compatible-base-url"
-export FINANCE_LLM_MODEL="your-model-name"
+export FINANCE_LLM_MODEL="your-model-or-endpoint-id"
 ```
 
 Volcengine example:
 
 ```bash
 export FINANCE_LLM_BASE_URL="https://ark.cn-beijing.volces.com/api/coding/v3"
-export FINANCE_LLM_MODEL="glm-5.1"
+export FINANCE_LLM_MODEL="your-model-or-endpoint-id"
 ```
 
 Do not commit real API keys. Use `.env.example` as a template only.

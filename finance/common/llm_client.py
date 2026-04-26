@@ -10,7 +10,7 @@ from typing import Any
 
 
 DEFAULT_BASE_URL = "https://ark.cn-beijing.volces.com/api/coding/v3"
-DEFAULT_MODEL = "glm-5.1"
+DEFAULT_MODEL = "your-model-or-endpoint-id"
 MISSING_API_KEY_MESSAGE = (
     "未配置 FINANCE_LLM_API_KEY。请设置环境变量 FINANCE_LLM_API_KEY，或使用 --mode rule。"
 )

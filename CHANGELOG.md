@@ -5,6 +5,7 @@
 - Add friendly SSL EOF diagnostic for LLM API connection failures
 - Mention FINANCE_LLM_BASE_URL checks for OpenAI-compatible endpoints
 - Document Volcengine standard inference base URL guidance
+- Replace hard-coded default model examples with provider-neutral model placeholders
 
 ## v1.7 - LLM Financial Analyst Executor
 
