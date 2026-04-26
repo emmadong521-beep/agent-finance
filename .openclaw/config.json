@@ -3,7 +3,7 @@
   "version": "0.2",
   "memory": {
     "backend": "sqlite",
-    "db_path": "memory/agent_os.db"
+    "db_path": "memory/memory.db"
   },
   "execution": {
     "default_engine": "hermes",
