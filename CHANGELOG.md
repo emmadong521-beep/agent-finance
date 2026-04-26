@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.8.1 - Repo Analysis CLI
+
+- Add command-line entrypoint for running repo analysis by GitHub URL
+- Support project name and analysis goal options
+- Support pretty and compact JSON output
+- Document repo analysis CLI usage
+
 ## v0.8 - Repo Context Integration
 
 - Integrate RepoContext into RepoAnalysisWorkflow

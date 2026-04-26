@@ -55,6 +55,26 @@ The workflow also generates rule-based analysis sections from this context.
 These sections are conservative: they explain structural clues from README, root
 files, and key files without claiming a full codebase analysis.
 
+## CLI Usage
+
+Run repo analysis directly from a GitHub URL:
+
+```bash
+python3 runtime/workflows/run_repo_analysis.py https://github.com/emmadong521-beep/agent-os
+```
+
+Use a custom project name:
+
+```bash
+python3 runtime/workflows/run_repo_analysis.py https://github.com/vercel/ai --project-name vercel-ai
+```
+
+Use compact JSON output:
+
+```bash
+python3 runtime/workflows/run_repo_analysis.py https://github.com/emmadong521-beep/agent-os --compact
+```
+
 ## Reusing StandardTaskWorkflow
 
 The repo workflow converts `RepoAnalysisInput` into a normal executor `Task`.
