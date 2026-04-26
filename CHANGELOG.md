@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.9.1 - Repo Analysis Markdown Renderer
+
+- Add render_repo_analysis_markdown for human-readable Markdown reports
+- Add --format option to repo analysis CLI (json or markdown)
+- Generate Mermaid module relationship graphs from analysis sections
+- Document Markdown renderer
+
 ## v0.9 - Rule-Based Repo Analyzer Executor
 
 - Add RepoAnalyzerExecutor for rule-based repository analysis

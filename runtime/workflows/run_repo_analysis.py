@@ -47,6 +47,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Print pretty JSON output. Enabled by default.",
     )
     parser.add_argument(
+        "--format",
+        dest="output_format",
+        default="json",
+        choices=("json", "markdown"),
+        help="Output format: json or markdown. Defaults to json.",
+    )
+    parser.add_argument(
         "--compact",
         action="store_true",
         help="Print compact JSON output.",
@@ -88,7 +95,11 @@ def main(argv: list[str] | None = None) -> int:
         )
         result = workflow.run(input_data)
 
-        if args.compact:
+        if args.output_format == "markdown":
+            from runtime.workflows.repo_report_renderer import render_repo_analysis_markdown
+
+            print(render_repo_analysis_markdown(result))
+        elif args.compact:
             print(json.dumps(asdict(result), separators=(",", ":"), default=str))
         else:
             print(json.dumps(asdict(result), indent=2, sort_keys=True, default=str))

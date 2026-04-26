@@ -77,6 +77,12 @@ Use compact JSON output:
 python3 runtime/workflows/run_repo_analysis.py https://github.com/emmadong521-beep/agent-os --compact
 ```
 
+Use Markdown output (human-readable report with Mermaid diagrams):
+
+```bash
+python3 runtime/workflows/run_repo_analysis.py https://github.com/emmadong521-beep/agent-os --format markdown
+```
+
 Fallback to the old mock executor:
 
 ```bash
