@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.6 - Repo Analysis Workflow
+
+- Add RepoAnalysisInput and RepoAnalysisResult models
+- Add RepoAnalysisWorkflow on top of StandardTaskWorkflow
+- Add repo analysis demo
+- Add repo analysis result JSON schema
+- Add Repo Analysis Workflow documentation
+
 ## v0.5 - Standard Task Workflow
 
 - Add WorkflowResult model

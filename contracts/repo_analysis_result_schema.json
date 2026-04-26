@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-os.local/contracts/repo_analysis_result_schema.json",
+  "title": "RepoAnalysisResult",
+  "description": "Normalized result returned by the Agent OS repo analysis workflow.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "repo_name",
+    "repo_url",
+    "local_path",
+    "status",
+    "summary",
+    "analysis_sections",
+    "workflow_result",
+    "written_memory_ids"
+  ],
+  "properties": {
+    "repo_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repo_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "local_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "failed",
+        "skipped",
+        "not_implemented"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "analysis_sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "overview",
+        "architecture",
+        "modules",
+        "data_flow",
+        "system_design",
+        "engineering_notes"
+      ],
+      "properties": {
+        "overview": {
+          "type": "string"
+        },
+        "architecture": {
+          "type": "string"
+        },
+        "modules": {
+          "type": "string"
+        },
+        "data_flow": {
+          "type": "string"
+        },
+        "system_design": {
+          "type": "string"
+        },
+        "engineering_notes": {
+          "type": "string"
+        }
+      }
+    },
+    "workflow_result": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "written_memory_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}
