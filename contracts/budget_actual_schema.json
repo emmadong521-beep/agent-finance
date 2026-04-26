@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-finance.local/contracts/budget_actual_schema.json",
+  "title": "BudgetActualInputRecord",
+  "description": "Input row for budget vs actual CSV data used by the Budget Variance Agent. CSV numeric cells may be provided as strings and are parsed by the loader.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "period",
+    "department",
+    "account",
+    "budget_amount",
+    "actual_amount",
+    "variance_amount",
+    "variance_rate",
+    "business_driver",
+    "remark"
+  ],
+  "properties": {
+    "period": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Accounting or management reporting period, such as 2026-03."
+    },
+    "department": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Department or responsible business unit."
+    },
+    "account": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Finance account or budget item name."
+    },
+    "budget_amount": {
+      "type": [
+        "number",
+        "string"
+      ],
+      "description": "Budget amount for the period. Parsed as float by the CSV loader."
+    },
+    "actual_amount": {
+      "type": [
+        "number",
+        "string"
+      ],
+      "description": "Actual amount for the period. Parsed as float by the CSV loader."
+    },
+    "variance_amount": {
+      "type": [
+        "number",
+        "string"
+      ],
+      "description": "Actual amount minus budget amount. Parsed as float when present; the CSV loader can calculate this when the CSV cell is blank."
+    },
+    "variance_rate": {
+      "type": [
+        "number",
+        "string"
+      ],
+      "description": "Variance amount divided by budget amount. Accepts decimal strings such as 0.125, percentage strings such as 12.5%, or blank cells that the CSV loader can calculate."
+    },
+    "business_driver": {
+      "type": "string",
+      "description": "Primary business driver behind the variance."
+    },
+    "remark": {
+      "type": "string",
+      "description": "Additional finance or business context for the record."
+    }
+  }
+}

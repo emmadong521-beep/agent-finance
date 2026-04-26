@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.2 - Finance Data Loader
+
+- Add BudgetActualRecord and FinanceDataset models
+- Add budget actual CSV loader
+- Add field validation and numeric parsing
+- Add budget data loading demo
+- Add budget actual input schema and documentation
+
 ## v1.1 - Finance MVP Repositioning
 
 - Reposition project from generic Agent OS to Finance AI Agent System

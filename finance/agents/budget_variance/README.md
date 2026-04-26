@@ -18,9 +18,21 @@ The Budget Variance Agent helps finance teams analyze budget execution and gener
 4. Attribute variances using business drivers and remarks.
 5. Produce a Chinese management report using the report template.
 
+## v1.2 CSV Loader
+
+v1.2 adds a standard-library CSV loader for budget actual data. It validates required fields, parses numeric values, supports percentage or decimal variance rates, and converts rows into structured finance data objects.
+
+Run the demo from the repository root:
+
+```bash
+python3 finance/agents/budget_variance/demo_load_budget_data.py
+```
+
 ## Related Files
 
 - `scope.md`: MVP input, output, and non-goals
 - `sample_output.md`: sample report output
 - `../../../templates/budget_variance_report.md`: report template
 - `../../../examples/budget_actual_sample.csv`: sample budget vs actual data
+- `../../../common/finance_models.py`: finance data models
+- `../../../common/csv_loader.py`: budget actual CSV loader
