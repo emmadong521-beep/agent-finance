@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.7 - GitHub Repo Fetcher
+
+- Add RepoContext model
+- Add GitHubRepoFetcher for public GitHub repositories
+- Add README, root file tree, and key file collection
+- Add repo context JSON schema
+- Add GitHub repo fetcher documentation
+
 ## v0.6 - Repo Analysis Workflow
 
 - Add RepoAnalysisInput and RepoAnalysisResult models

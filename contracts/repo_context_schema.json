@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-os.local/contracts/repo_context_schema.json",
+  "title": "RepoContext",
+  "description": "Basic context fetched from a public GitHub repository.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "repo_name",
+    "repo_url"
+  ],
+  "properties": {
+    "repo_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repo_url": {
+      "type": "string",
+      "minLength": 1
+    },
+    "default_branch": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "readme": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "file_tree": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "key_files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}
